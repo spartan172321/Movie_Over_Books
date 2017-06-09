@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Single AJAX</title>
+</head>
+
+<form id = "book-input">
+        <input type="text" id = "book-input-input">
+        <input id="add-book" type="submit">
+</form>
+
+
+<div id="cover-section"></div>
+<div id="description-section"></div>
+
+<body>
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript">
+
+
+
+// var book = $("#book-input-input").val();
+function bookInfo(){
+var title = $("#book-input-input").val();
+var key = "AIzaSyClO-EgqhlVOtcJl7dImH6UZct9bNqjvJU";
+var queryURL = "https://www.googleapis.com/books/v1/volumes?q="+title;
+
+// Make a ajax call to get the json data as response.
+$.ajax({
+  url:queryURL,
+  method: "GET"
+}).done(function(response){
+  console.log(response);
+
+  console.log(response.items[0].volumeInfo.imageLinks.thumbnail);
+  console.log(response.items[0].volumeInfo.description);
+
+   var img = $("<img>").attr("src",response.items[0].volumeInfo.imageLinks.thumbnail); 
+   var description = $("<div>").append(response.items[0].volumeInfo.description);
+
+   $("#cover-section").html(img);
+   $("#description-section").html(description);
+  
+
+});
+
+
+  var queryURL="https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q="+ title+"trailer&key=AIzaSyAIKlghpIdb80vepeWfkIMKBjihtirdPso";
+      // https://www.googleapis.com/youtube/v3/search
+      // https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=surfing&key={YOUR_API_KEY}
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+   }).done(function(response) {
+   console.log(response);
+   console.log(response.Runtime);
+      // $("#test").html(response)
+  });
+
+
+
+
+}
+
+
+$("#add-book").on("click", function(event){
+  event.preventDefault();
+
+  bookInfo();
+
+});
+
+
+
+
+
+
+</script>
+
+  
