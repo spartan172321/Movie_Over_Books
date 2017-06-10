@@ -32,11 +32,11 @@ var queryURL = "https://www.googleapis.com/books/v1/volumes?q="+title;
 $.ajax({
   url:queryURL,
   method: "GET"
-}).done(function(response){
+}).done(function(response){  
   console.log(response);
 
-  console.log(response.items[0].volumeInfo.imageLinks.thumbnail);
-  console.log(response.items[0].volumeInfo.description);
+  console.log(response.items[0].volumeInfo.imageLinks.thumbnail); //using google books api to get the cover of the book
+  console.log(response.items[0].volumeInfo.description); //using google books api to get the synopsis of the book
 
    var img = $("<img>").attr("src",response.items[0].volumeInfo.imageLinks.thumbnail); 
    var description = $("<div>").append(response.items[0].volumeInfo.description);
