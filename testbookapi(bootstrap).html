@@ -1,53 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-
-<head>
-  <meta charset="utf-8">
-  <title>Single AJAX</title>
-</head>
-
-<form id = "book-input">
-        <input type="text" id = "book-input-input">
-        <input id="add-book" type="submit">
-</form>
-
-<br><br>
-
-<div id="cover-section"></div>
-<br><br>
-<div id="description-section"></div>
-<br><br>
-<div id="test"></div>
-
-<body>
-  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-  <script type="text/javascript">
-
-
-
-// var book = $("#book-input-input").val();
-function bookInfo(){
-var title = $("#book-input-input").val();
-var key = "AIzaSyClO-EgqhlVOtcJl7dImH6UZct9bNqjvJU";
-var queryURL = "https://www.googleapis.com/books/v1/volumes?q="+title;
-
-// Make a ajax call to get the json data as response.
-$.ajax({
-  url:queryURL,
-  method: "GET"
-}).done(function(response){  
-  console.log(response);
-
-  console.log(response.items[0].volumeInfo.imageLinks.thumbnail); //using google books api to get the cover of the book
-  console.log(response.items[0].volumeInfo.description); //using google books api to get the synopsis of the book
-
-   var img = $("<img>").attr("src",response.items[0].volumeInfo.imageLinks.thumbnail); 
-   var description = $("<div>").append(response.items[0].volumeInfo.description);
-
-   $("#cover-section").html(img);
-   $("#description-section").html(description);
-=======
   <head>
     <meta charset="utf-8">
     <title>MOB</title>
@@ -58,8 +10,10 @@ $.ajax({
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
   </head>
   <body>
->>>>>>> 3686a4f505d1da418c4aac059ed6a23190755325
-  
+    <div class="container-fluid">
+      <!-- display a box for text input -->
+      <div class="row">
+        <div class="col-4">
           <form>
             <div class="form-group">
               <label for="movie-name-input">Add a Book Title</label>
@@ -67,11 +21,30 @@ $.ajax({
             </div>
             <button class="btn btn-primary" id="input-btn" type="submit">Submit</button>
           </form>
-        s
+        </div>
+        <div class="col"></div>
+      </div>
       <!-- where the trailer is appended -->
+        
       <!-- card experiment, put the contents on a card -->
-      
+       <div class= "card" style = "width:20rem">
+        <img class="card-img-top" src="" alt="Card img cap">
+          <div class="card-block">
+            <h4 class="card-title"></h4>
+            <p class="card-text"></p>
+          </div>
+        </div>
 
+
+
+
+
+
+
+
+
+
+      
       <div id="cover-section"></div>
       <div id="description-section"></div>
       <div id="test"></div>
