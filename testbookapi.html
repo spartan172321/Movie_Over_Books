@@ -1,136 +1,85 @@
 <!DOCTYPE html>
-<html lang="en">
-<<<<<<< HEAD
-
 <head>
   <meta charset="utf-8">
-  <title>Single AJAX</title>
+  <title>MOB</title>
+  <!-- bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 </head>
-
-<form id = "book-input">
-        <input type="text" id = "book-input-input">
-        <input id="add-book" type="submit">
-</form>
-
-<br><br>
-
-<div id="cover-section"></div>
-<br><br>
-<div id="description-section"></div>
-<br><br>
-<div id="test"></div>
-
 <body>
-  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-  <script type="text/javascript">
-
-
-
-// var book = $("#book-input-input").val();
-function bookInfo(){
-var title = $("#book-input-input").val();
-var key = "AIzaSyClO-EgqhlVOtcJl7dImH6UZct9bNqjvJU";
-var queryURL = "https://www.googleapis.com/books/v1/volumes?q="+title;
-
-// Make a ajax call to get the json data as response.
+  
+  <form>
+    <div class="form-group">
+      <label for="movie-name-input">Add a Book Title</label>
+      <input class="form-control" id="book-input" type="text">
+    </div>
+    <button class="btn btn-primary" id="input-btn" type="submit">Submit</button>
+  </form>
+  
+  <!-- where the trailer is appended -->
+  <!-- card experiment, put the contents on a card -->
+  
+  <div id="cover-section"></div>
+  <div id="description-section"></div>
+  <div id="test"></div>
+</div>
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+// define title variable to hold the value of the user inputs
+var title = "";
+// create a click event listener to accept user input in the text box
+$('#input-btn').on('click', function(event){
+event.preventDefault();
+// make the title variable accept value in the text box
+title = $("#book-input").val().trim();
+console.log(title)
+// call the addMovie function
+addMovie();
+bookInfo();
+});
+// Add trailer function
+// =========================================
+function addMovie(){
+// clears out the previous trailer when a new input is submitted
+$('#test').empty();
+// constructing a queryURL variable
+var queryURL='https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&type=video&q='+title+'+trailer&key=AIzaSyAIKlghpIdb80vepeWfkIMKBjihtirdPso';
+// get whats needed from the API
 $.ajax({
+url: queryURL,
+method: "GET"
+}).done(function(response) {
+// dig into the response object for the videoId
+var listItems = response.items
+var trailerId = listItems[0]['id']['videoId']
+// create the embed youtube video Id
+var embedId = "https://www.youtube.com/embed/"+trailerId
+// append the video clip to the <div id = "test">
+  $('#test').append('<iframe width="640" height="360" src='+embedId+' frameborder="0" allowfullscreen></iframe>')
+  });
+  }
+  // Add book function
+  // ========================================
+  function bookInfo(){
+  
+  var key = "AIzaSyClO-EgqhlVOtcJl7dImH6UZct9bNqjvJU";
+  var queryURL = "https://www.googleapis.com/books/v1/volumes?q="+title;
+  // Make a ajax call to get the json data as response.
+  $.ajax({
   url:queryURL,
   method: "GET"
-}).done(function(response){  
+  }).done(function(response){
   console.log(response);
-
-  console.log(response.items[0].volumeInfo.imageLinks.thumbnail); //using google books api to get the cover of the book
-  console.log(response.items[0].volumeInfo.description); //using google books api to get the synopsis of the book
-
-   var img = $("<img>").attr("src",response.items[0].volumeInfo.imageLinks.thumbnail); 
-   var description = $("<div>").append(response.items[0].volumeInfo.description);
-
-   $("#cover-section").html(img);
-   $("#description-section").html(description);
-=======
-  <head>
-    <meta charset="utf-8">
-    <title>MOB</title>
-    <!-- bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-  </head>
-  <body>
->>>>>>> 3686a4f505d1da418c4aac059ed6a23190755325
-  
-          <form>
-            <div class="form-group">
-              <label for="movie-name-input">Add a Book Title</label>
-              <input class="form-control" id="book-input" type="text">
-            </div>
-            <button class="btn btn-primary" id="input-btn" type="submit">Submit</button>
-          </form>
-        s
-      <!-- where the trailer is appended -->
-      <!-- card experiment, put the contents on a card -->
-      
-
-      <div id="cover-section"></div>
-      <div id="description-section"></div>
-      <div id="test"></div>
-    </div>
-    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script type="text/javascript">
-    // define title variable to hold the value of the user inputs
-    var title = "";
-    // create a click event listener to accept user input in the text box
-    $('#input-btn').on('click', function(event){
-    event.preventDefault();
-    // make the title variable accept value in the text box
-    title = $("#book-input").val().trim();
-    console.log(title)
-    // call the addMovie function
-    addMovie();
-    bookInfo();
+  console.log(response.items[0].volumeInfo.imageLinks.thumbnail);
+  console.log(response.items[0].volumeInfo.description);
+  var img = $("<img>").attr("src",response.items[0].volumeInfo.imageLinks.thumbnail);
+  var description = $("<div>").append(response.items[0].volumeInfo.description);
+    $("#cover-section").html(img);
+    $("#description-section").html(description);
     });
-    // Add trailer function
-    // =========================================
-    function addMovie(){
-    // clears out the previous trailer when a new input is submitted
-    $('#test').empty();
-    // constructing a queryURL variable
-    var queryURL='https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&type=video&q='+title+'+trailer&key=AIzaSyAIKlghpIdb80vepeWfkIMKBjihtirdPso';
-    // get whats needed from the API
-    $.ajax({
-    url: queryURL,
-    method: "GET"
-    }).done(function(response) {
-    // dig into the response object for the videoId
-    var listItems = response.items
-    var trailerId = listItems[0]['id']['videoId']
-    // create the embed youtube video Id
-    var embedId = "https://www.youtube.com/embed/"+trailerId
-    // append the video clip to the <div id = "test">
-      $('#test').append('<iframe width="640" height="360" src='+embedId+' frameborder="0" allowfullscreen></iframe>')
-      });
-      }
-      // Add book function
-      // ========================================
-      function bookInfo(){
-      
-      var key = "AIzaSyClO-EgqhlVOtcJl7dImH6UZct9bNqjvJU";
-      var queryURL = "https://www.googleapis.com/books/v1/volumes?q="+title;
-      // Make a ajax call to get the json data as response.
-      $.ajax({
-      url:queryURL,
-      method: "GET"
-      }).done(function(response){
-      console.log(response);
-      console.log(response.items[0].volumeInfo.imageLinks.thumbnail);
-      console.log(response.items[0].volumeInfo.description);
-      var img = $("<img>").attr("src",response.items[0].volumeInfo.imageLinks.thumbnail);
-      var description = $("<div>").append(response.items[0].volumeInfo.description);
-        $("#cover-section").html(img);
-        $("#description-section").html(description);
-        });
-        }
-        </script>
-      </body>
-    </html>
+    }
+    </script>
+  </body>
+</html>
