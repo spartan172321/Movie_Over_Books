@@ -61,8 +61,9 @@
         <div class="col-4"></div>
       </div>
       <div class="row" id="showcard">
-        <div class="col-6">
-          <div class="card" style="width:35rem">
+      <div class="col-1"></div>
+        <div class="col-5">
+          <div class="card">
             <div class="img-holder" style="margin:auto"></div>
             <div class="card-block">
               <h4 class="card-title"></h4>
@@ -70,9 +71,10 @@
             </div>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-5">
           <div id="test"></div>
         </div>
+        <div class="col-1"></div>
       </div>
     </div>
 
@@ -117,7 +119,7 @@
     // create the embed youtube video Id
     var embedId = "https://www.youtube.com/embed/"+trailerId
     // append the video clip to the <div id = "test">
-      $('#test').append('<iframe width="640" height="360" src='+embedId+' frameborder="0" allowfullscreen></iframe>')
+      $('#test').append('<iframe width="440" height="360" src='+embedId+' frameborder="0" allowfullscreen></iframe>')
       });
       }
       // Add book function

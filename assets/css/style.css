@@ -8,3 +8,11 @@ body{
 	height: 400px;
 	width: 300px;
 }
+
+
+.card{
+	height: 400px;
+	width: 450px;
+	overflow-y: scroll;
+}
+
