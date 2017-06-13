@@ -1,0 +1,9 @@
+body{
+	background-image: url(../images/book-cover.jpg);
+}
+
+#book{
+	height: 400px;
+	width: 300px;
+}
+
