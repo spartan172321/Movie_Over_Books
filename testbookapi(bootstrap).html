@@ -19,7 +19,7 @@
               <label for="movie-name-input">Add a Book Title</label>
               <input class="form-control" id="book-input" type="text">
             </div>
-            <button class="btn btn-primary" id="input-btn" type="submit" data-toggle="collapse" data-target="#foldcard">Submit</button>
+            <button class="btn btn-primary" id="input-btn" type="submit">Submit</button>
           </form>
         </div>
         <div class="col-6"></div>
@@ -27,7 +27,7 @@
       <div class="row">
         <div class="col-4"></div>
         <div class="col-4">
-        <div class="row collapse show" id="foldcard">
+        <div class="row show">
           <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
@@ -54,7 +54,7 @@
         </div>
         <div class="col-4"></div>
       </div>
-      <div class="row">
+      <div class="row" id="showcard">
         <div class="col-6">
           <div class="card" style="width:35rem">
             <div class="img-holder" style="margin:auto"></div>
@@ -74,11 +74,17 @@
     <script type="text/javascript">
     // define title variable to hold the value of the user inputs
     var title = "";
+
+    $("#showcard").hide();
     // create a click event listener to accept user input in the text box
     $('#input-btn').on('click', function(event){
     event.preventDefault();
     // make the title variable accept value in the text box
     title = $("#book-input").val().trim();
+    // Hides the carousel after the submit button is used
+    $("#carouselExampleSlidesOnly").hide();
+    //Displays the book blurb and video divs after submit button is used
+    $("#showcard").show();
     console.log(title)
     // call the addMovie function
     addMovie();
