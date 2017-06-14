@@ -17,10 +17,8 @@ body{
 }
 
 #logo{
-	float: left;
-	height: 100px;
-	width: 100px;
-	position: relative;
-    top: 10px;
-    left: 10px;
+
+	height: 150px;
+	width: 150px;
+	
 }
