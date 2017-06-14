@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>MOB</title>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  </head>
+  <body>
+
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col-6"><h1>Movies Over Books</h1></div>
+        <div class="col-6">
+          <form>
+            <div class="form-group">
+              <label for="movie-name-input"><h2>Add a Book Title</h2> </label>
+              <input class="form-control" id="book-input" type="text">
+            </div>
+            <button class="btn btn-primary" id="input-btn" type="submit">Submit</button>
+          </form>
+        </div>
+        <div class="col-6"></div>
+      </div>
+      <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+        <div class="row show">
+          <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+              <div class="carousel-item active">
+                <img class="d-block img-fluid" src="assets/images/1984carousel.jpg" alt="First slide" id="book">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="assets/images/lifeofpicarousel.jpg" alt="Second slide" id="book">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="assets/images/godfathercarousel.jpg" alt="Third slide" id="book">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="assets/images/pottercarousel.jpg" alt="Fourth slide" id="book">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="assets/images/salesmancarousel.jpeg" alt="Fifth slide" id="book">
+              </div>
+              <div class="carousel-item">
+                <img class="d-block img-fluid" src="assets/images/warofworldcarousel.jpg" alt="Sixth slide" id="book">
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="col-4"></div>
+      </div>
+      <div class="row" id="showcard">
+      <div class="col-1"></div>
+        <div class="col-5">
+          <div class="card">
+            <div class="img-holder" style="margin:auto"></div>
+            <div class="card-block">
+              <h4 class="card-title"></h4>
+              <p class="card-text"></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <div id="test"></div>
+        </div>
+        <div class="col-1"></div>
+      </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript">
+    // define title variable to hold the value of the user inputs
+    var title = "";
+
+    $("#showcard").hide();
+    // create a click event listener to accept user input in the text box
+    $('#input-btn').on('click', function(event){
+    event.preventDefault();
+    // make the title variable accept value in the text box
+    title = $("#book-input").val().trim();
+    // Hides the carousel after the submit button is used
+    $("#carouselExampleSlidesOnly").hide();
+    //Displays the book blurb and video divs after submit button is used
+    $("#showcard").show();
+    console.log(title)
+    // call the addMovie function
+    addMovie();
+    bookInfo();
+
+
+
+    });
+    // Add trailer function
+    // =========================================
+    function addMovie(){
+    // clears out the previous trailer when a new input is submitted
+    $('#test').empty();
+    // constructing a queryURL variable
+    var queryURL='https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&type=video&q='+title+'+trailer&key=AIzaSyAIKlghpIdb80vepeWfkIMKBjihtirdPso';
+    // get whats needed from the API
+    $.ajax({
+    url: queryURL,
+    method: "GET"
+    }).done(function(response) {
+    // dig into the response object for the videoId
+    var listItems = response.items
+    var trailerId = listItems[0]['id']['videoId']
+    // create the embed youtube video Id
+    var embedId = "https://www.youtube.com/embed/"+trailerId
+    // append the video clip to the <div id = "test">
+      $('#test').append('<iframe width="440" height="360" src='+embedId+' frameborder="0" allowfullscreen></iframe>')
+      });
+      }
+      // Add book function
+      // ========================================
+      function bookInfo(){
+
+      var key = "AIzaSyClO-EgqhlVOtcJl7dImH6UZct9bNqjvJU";
+      var queryURL = "https://www.googleapis.com/books/v1/volumes?q="+title;
+      // Make a ajax call to get the json data as response.
+      $.ajax({
+      url:queryURL,
+      method: "GET"
+      }).done(function(response){
+      console.log(response);
+      console.log(response.items[0].volumeInfo.imageLinks.thumbnail);
+      console.log(response.items[0].volumeInfo.description);
+      var img = $("<img>").attr("src",response.items[0].volumeInfo.imageLinks.thumbnail);
+      // var imgDiv = $("<div>").append(img);
+        var description = $("<div>").append(response.items[0].volumeInfo.description);
+          $(".img-holder").html(img);
+          $(".card-title").html(title.toUpperCase());
+          $(".card-text").html(description);
+          });
+          }
+          </script>
+        </body>
+      </html>
